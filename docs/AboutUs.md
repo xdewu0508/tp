@@ -24,7 +24,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[github](https://github.com/JordanGoh4)]
 
-* Role: Team Lead
+* Role: Team Member
 * Responsibilities: UI
 
 ### Wang Junwei
