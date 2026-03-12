@@ -49,16 +49,16 @@ public class StudentNameTest {
     public void constructor_validName_success() {
         // Valid single word name
         assertTrue(new StudentName(SINGLE_WORD) != null);
-        
+
         // Valid multiple words name
         assertTrue(new StudentName(MULTIPLE_WORDS) != null);
-        
+
         // Valid lowercase name
         assertTrue(new StudentName(LOWERCASE) != null);
-        
+
         // Valid uppercase name
         assertTrue(new StudentName(UPPERCASE) != null);
-        
+
         // Valid name with spaces
         assertTrue(new StudentName(WITH_SPACES) != null);
     }
@@ -67,7 +67,7 @@ public class StudentNameTest {
     public void constructor_null_throwsNullPointerException() {
         // Null name should throw NullPointerException
         org.junit.jupiter.api.Assertions.assertThrows(
-            NullPointerException.class, 
+            NullPointerException.class,
             () -> new StudentName(null)
         );
     }
@@ -76,42 +76,42 @@ public class StudentNameTest {
     public void constructor_invalidName_throwsIllegalArgumentException() {
         // Empty name
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentName(EMPTY),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Blank name (spaces only)
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentName(BLANK),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Name with numbers
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentName(CONTAINS_NUMBER),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Name with symbols
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentName(CONTAINS_SYMBOL),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Name with asterisk
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentName(ASTERISK),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Name with leading whitespace
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentName(LEADING_WHITESPACE),
             MESSAGE_CONSTRAINTS
         );
@@ -121,16 +121,16 @@ public class StudentNameTest {
     public void isValidName_validName_returnsTrue() {
         // Valid single word name
         assertTrue(StudentName.isValidName(SINGLE_WORD));
-        
+
         // Valid multiple words name
         assertTrue(StudentName.isValidName(MULTIPLE_WORDS));
-        
+
         // Valid lowercase name
         assertTrue(StudentName.isValidName(LOWERCASE));
-        
+
         // Valid uppercase name
         assertTrue(StudentName.isValidName(UPPERCASE));
-        
+
         // Valid name with spaces
         assertTrue(StudentName.isValidName(WITH_SPACES));
     }
@@ -139,19 +139,19 @@ public class StudentNameTest {
     public void isValidName_invalidName_returnsFalse() {
         // Empty name
         assertFalse(StudentName.isValidName(EMPTY));
-        
+
         // Blank name (spaces only)
         assertFalse(StudentName.isValidName(BLANK));
-        
+
         // Name with numbers
         assertFalse(StudentName.isValidName(CONTAINS_NUMBER));
-        
+
         // Name with symbols
         assertFalse(StudentName.isValidName(CONTAINS_SYMBOL));
-        
+
         // Name with asterisk
         assertFalse(StudentName.isValidName(ASTERISK));
-        
+
         // Name with leading whitespace
         assertFalse(StudentName.isValidName(LEADING_WHITESPACE));
     }

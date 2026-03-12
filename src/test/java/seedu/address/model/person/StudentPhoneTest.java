@@ -47,16 +47,16 @@ public class StudentPhoneTest {
     public void constructor_validPhone_success() {
         // Valid 4-digit phone
         assertTrue(new StudentPhone(FOUR_DIGITS) != null);
-        
+
         // Valid 7-digit phone
         assertTrue(new StudentPhone(SEVEN_DIGITS) != null);
-        
+
         // Valid 8-digit phone (Singapore standard)
         assertTrue(new StudentPhone(EIGHT_DIGITS) != null);
-        
+
         // Valid 10-digit phone
         assertTrue(new StudentPhone(TEN_DIGITS) != null);
-        
+
         // Valid 15-digit phone (max length)
         assertTrue(new StudentPhone(FIFTEEN_DIGITS) != null);
     }
@@ -65,7 +65,7 @@ public class StudentPhoneTest {
     public void constructor_null_throwsNullPointerException() {
         // Null phone should throw NullPointerException
         org.junit.jupiter.api.Assertions.assertThrows(
-            NullPointerException.class, 
+            NullPointerException.class,
             () -> new StudentPhone(null)
         );
     }
@@ -74,28 +74,28 @@ public class StudentPhoneTest {
     public void constructor_invalidPhone_throwsIllegalArgumentException() {
         // 3-digit phone (too short)
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentPhone(THREE_DIGITS),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // 16-digit phone (too long)
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentPhone(SIXTEEN_DIGITS),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Phone with letters
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentPhone(WITH_LETTERS),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Phone with symbols
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentPhone(WITH_SYMBOLS),
             MESSAGE_CONSTRAINTS
         );
@@ -105,16 +105,16 @@ public class StudentPhoneTest {
     public void isValidPhone_validPhone_returnsTrue() {
         // Valid 4-digit phone
         assertTrue(StudentPhone.isValidPhone(FOUR_DIGITS));
-        
+
         // Valid 7-digit phone
         assertTrue(StudentPhone.isValidPhone(SEVEN_DIGITS));
-        
+
         // Valid 8-digit phone
         assertTrue(StudentPhone.isValidPhone(EIGHT_DIGITS));
-        
+
         // Valid 10-digit phone
         assertTrue(StudentPhone.isValidPhone(TEN_DIGITS));
-        
+
         // Valid 15-digit phone
         assertTrue(StudentPhone.isValidPhone(FIFTEEN_DIGITS));
     }
@@ -123,13 +123,13 @@ public class StudentPhoneTest {
     public void isValidPhone_invalidPhone_returnsFalse() {
         // 3-digit phone (too short)
         assertFalse(StudentPhone.isValidPhone(THREE_DIGITS));
-        
+
         // 16-digit phone (too long)
         assertFalse(StudentPhone.isValidPhone(SIXTEEN_DIGITS));
-        
+
         // Phone with letters
         assertFalse(StudentPhone.isValidPhone(WITH_LETTERS));
-        
+
         // Phone with symbols
         assertFalse(StudentPhone.isValidPhone(WITH_SYMBOLS));
     }

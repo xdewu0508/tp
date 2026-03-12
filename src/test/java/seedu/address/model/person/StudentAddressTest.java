@@ -43,16 +43,16 @@ public class StudentAddressTest {
     public void constructor_validAddress_success() {
         // Simple address
         assertTrue(new StudentAddress(SIMPLE_ADDRESS) != null);
-        
+
         // Long address
         assertTrue(new StudentAddress(LONG_ADDRESS) != null);
-        
+
         // Address with numbers
         assertTrue(new StudentAddress(WITH_NUMBERS) != null);
-        
+
         // Address with special characters
         assertTrue(new StudentAddress(WITH_SPECIAL_CHARS) != null);
-        
+
         // Address with units
         assertTrue(new StudentAddress(WITH_UNITS) != null);
     }
@@ -61,7 +61,7 @@ public class StudentAddressTest {
     public void constructor_null_throwsNullPointerException() {
         // Null address should throw NullPointerException
         org.junit.jupiter.api.Assertions.assertThrows(
-            NullPointerException.class, 
+            NullPointerException.class,
             () -> new StudentAddress(null)
         );
     }
@@ -70,21 +70,21 @@ public class StudentAddressTest {
     public void constructor_invalidAddress_throwsIllegalArgumentException() {
         // Empty address
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentAddress(EMPTY),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Blank address (spaces only)
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentAddress(BLANK),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Whitespace only address
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentAddress(WHITESPACE_ONLY),
             MESSAGE_CONSTRAINTS
         );
@@ -94,16 +94,16 @@ public class StudentAddressTest {
     public void isValidAddress_validAddress_returnsTrue() {
         // Simple address
         assertTrue(StudentAddress.isValidAddress(SIMPLE_ADDRESS));
-        
+
         // Long address
         assertTrue(StudentAddress.isValidAddress(LONG_ADDRESS));
-        
+
         // Address with numbers
         assertTrue(StudentAddress.isValidAddress(WITH_NUMBERS));
-        
+
         // Address with special characters
         assertTrue(StudentAddress.isValidAddress(WITH_SPECIAL_CHARS));
-        
+
         // Address with units
         assertTrue(StudentAddress.isValidAddress(WITH_UNITS));
     }
@@ -112,10 +112,10 @@ public class StudentAddressTest {
     public void isValidAddress_invalidAddress_returnsFalse() {
         // Empty address
         assertFalse(StudentAddress.isValidAddress(EMPTY));
-        
+
         // Blank address (spaces only)
         assertFalse(StudentAddress.isValidAddress(BLANK));
-        
+
         // Whitespace only address
         assertFalse(StudentAddress.isValidAddress(WHITESPACE_ONLY));
     }

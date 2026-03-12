@@ -49,16 +49,16 @@ public class StudentEmailTest {
     public void constructor_validEmail_success() {
         // Standard email
         assertTrue(new StudentEmail(STANDARD_EMAIL) != null);
-        
+
         // Email with dots
         assertTrue(new StudentEmail(WITH_DOTS) != null);
-        
+
         // Email with numbers
         assertTrue(new StudentEmail(WITH_NUMBERS) != null);
-        
+
         // Email with hyphens
         assertTrue(new StudentEmail(WITH_HYPHENS) != null);
-        
+
         // Email with subdomain
         assertTrue(new StudentEmail(WITH_SUBDOMAIN) != null);
     }
@@ -67,7 +67,7 @@ public class StudentEmailTest {
     public void constructor_null_throwsNullPointerException() {
         // Null email should throw NullPointerException
         org.junit.jupiter.api.Assertions.assertThrows(
-            NullPointerException.class, 
+            NullPointerException.class,
             () -> new StudentEmail(null)
         );
     }
@@ -76,42 +76,42 @@ public class StudentEmailTest {
     public void constructor_invalidEmail_throwsIllegalArgumentException() {
         // Missing @ symbol
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentEmail(MISSING_AT),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Double @ symbol
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentEmail(DOUBLE_AT),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Missing local part
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentEmail(MISSING_LOCAL_PART),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Missing domain
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentEmail(MISSING_DOMAIN),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Missing TLD
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentEmail(MISSING_TLD),
             MESSAGE_CONSTRAINTS
         );
-        
+
         // Email with spaces
         org.junit.jupiter.api.Assertions.assertThrows(
-            IllegalArgumentException.class, 
+            IllegalArgumentException.class,
             () -> new StudentEmail(WITH_SPACES),
             MESSAGE_CONSTRAINTS
         );
@@ -121,16 +121,16 @@ public class StudentEmailTest {
     public void isValidEmail_validEmail_returnsTrue() {
         // Standard email
         assertTrue(StudentEmail.isValidEmail(STANDARD_EMAIL));
-        
+
         // Email with dots
         assertTrue(StudentEmail.isValidEmail(WITH_DOTS));
-        
+
         // Email with numbers
         assertTrue(StudentEmail.isValidEmail(WITH_NUMBERS));
-        
+
         // Email with hyphens
         assertTrue(StudentEmail.isValidEmail(WITH_HYPHENS));
-        
+
         // Email with subdomain
         assertTrue(StudentEmail.isValidEmail(WITH_SUBDOMAIN));
     }
@@ -139,19 +139,19 @@ public class StudentEmailTest {
     public void isValidEmail_invalidEmail_returnsFalse() {
         // Missing @ symbol
         assertFalse(StudentEmail.isValidEmail(MISSING_AT));
-        
+
         // Double @ symbol
         assertFalse(StudentEmail.isValidEmail(DOUBLE_AT));
-        
+
         // Missing local part
         assertFalse(StudentEmail.isValidEmail(MISSING_LOCAL_PART));
-        
+
         // Missing domain
         assertFalse(StudentEmail.isValidEmail(MISSING_DOMAIN));
-        
+
         // Missing TLD
         assertFalse(StudentEmail.isValidEmail(MISSING_TLD));
-        
+
         // Email with spaces
         assertFalse(StudentEmail.isValidEmail(WITH_SPACES));
     }
