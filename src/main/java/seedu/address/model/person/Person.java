@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -76,8 +77,7 @@ public class Person {
      * if modification is attempted.
      */
     public Set<Tag> getTags() {
-        //return Collections.unmodifiableSet(tags);
-        return tags;
+        return Collections.unmodifiableSet(tags);
     }
 
     /**

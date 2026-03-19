@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -72,7 +73,7 @@ public class TagCommand extends Command {
     private static Person addTagsToPerson(Person personToTag, Set<Tag> tags) {
         assert personToTag != null;
 
-        Set<Tag> updatedTags = personToTag.getTags();
+        Set<Tag> updatedTags = new HashSet<>(personToTag.getTags());
         updatedTags.addAll(tags);
 
         return new Person(personToTag.getName(),
