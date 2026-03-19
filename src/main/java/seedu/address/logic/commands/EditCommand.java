@@ -102,8 +102,9 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        StudentClass updatedStudentClass = editPersonDescriptor.getStudentClass()
-                .orElse(personToEdit.getStudentClass());
+        StudentClass updatedStudentClass = editPersonDescriptor.isStudentClassPresent()
+                ? editPersonDescriptor.getStudentClass().orElse(null)
+                : personToEdit.getStudentClass();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedStudentClass, updatedTags);
@@ -143,6 +144,7 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private StudentClass studentClass;
+        private boolean studentClassPresent;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -156,7 +158,8 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
-            setStudentClass(toCopy.studentClass);
+            this.studentClass = toCopy.studentClass;
+            this.studentClassPresent = toCopy.studentClassPresent;
             setTags(toCopy.tags);
         }
 
@@ -164,7 +167,8 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, studentClass, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags)
+                    || studentClassPresent;
         }
 
         public void setName(Name name) {
@@ -201,10 +205,18 @@ public class EditCommand extends Command {
 
         public void setStudentClass(StudentClass studentClass) {
             this.studentClass = studentClass;
+            this.studentClassPresent = true;
         }
 
         public Optional<StudentClass> getStudentClass() {
             return Optional.ofNullable(studentClass);
+        }
+
+        /**
+         * Returns true if studentClass was explicitly set (including to null).
+         */
+        public boolean isStudentClassPresent() {
+            return studentClassPresent;
         }
 
         /**
@@ -241,6 +253,7 @@ public class EditCommand extends Command {
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(studentClass, otherEditPersonDescriptor.studentClass)
+                    && studentClassPresent == otherEditPersonDescriptor.studentClassPresent
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
 
