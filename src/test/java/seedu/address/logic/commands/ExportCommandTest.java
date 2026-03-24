@@ -35,7 +35,8 @@ public class ExportCommandTest {
         ExportCommand command = new ExportCommand(csvFile);
         CommandResult result = command.execute(model);
 
-        assertEquals(String.format("Exported %d persons to: %s", model.getAddressBook().getPersonList().size(), csvFile),
+        assertEquals(String.format("Exported %d persons to: %s",
+                        model.getAddressBook().getPersonList().size(), csvFile),
                 result.getFeedbackToUser());
 
         assertTrue(Files.exists(csvFile));
