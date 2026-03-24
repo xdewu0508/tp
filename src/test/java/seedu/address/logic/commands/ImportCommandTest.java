@@ -42,7 +42,7 @@ public class ImportCommandTest {
         CommandResult result = command.execute(model);
 
         assertEquals("Import finished. Imported: 2, duplicates skipped: 0, invalid rows skipped: 0.",
-                result.getFeedbackToUser());
+                result.getFeedbackToUser().trim());
         assertTrue(model.getFilteredPersonList().stream().anyMatch(p -> p.getName().fullName.equals("Zara Lim")));
         assertTrue(model.getFilteredPersonList().stream().anyMatch(p -> p.getName().fullName.equals("Noah Tan")));
     }
@@ -60,8 +60,10 @@ public class ImportCommandTest {
         ImportCommand command = new ImportCommand(csvFile);
         CommandResult result = command.execute(model);
 
-        assertEquals("Import finished. Imported: 1, duplicates skipped: 1, invalid rows skipped: 1.",
-                result.getFeedbackToUser());
+        String feedback = result.getFeedbackToUser();
+        assertTrue(feedback.contains("Import finished. Imported: 1, duplicates skipped: 1, invalid rows skipped: 1."));
+        assertTrue(feedback.contains("Row 2 skipped: duplicate person (same name)"));
+        assertTrue(feedback.contains("Row 3 skipped:"));
         assertTrue(model.getFilteredPersonList().stream().anyMatch(p -> p.getName().fullName.equals("New Person")));
     }
 

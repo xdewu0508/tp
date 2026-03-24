@@ -27,6 +27,7 @@ import seedu.address.model.tag.Tag;
  * <p>CSV format per row: name,phone,email,address[,class][,tag1;tag2;...]</p>
  */
 public class ImportCommand extends Command {
+    private static final int MAX_SKIP_DETAILS = 10;
 
     public static final String COMMAND_WORD = "import";
 
@@ -41,6 +42,11 @@ public class ImportCommand extends Command {
 
     private final Path csvPath;
 
+    /**
+     * Constructs an ImportCommand with the given CSV file path.
+     *
+     * @param csvPath Path to the CSV file to import.
+     */
     public ImportCommand(Path csvPath) {
         requireNonNull(csvPath);
         this.csvPath = csvPath;
@@ -60,9 +66,10 @@ public class ImportCommand extends Command {
         int importedCount = 0;
         int duplicateCount = 0;
         int invalidCount = 0;
+        List<String> skipDetails = new ArrayList<>();
 
         for (int i = 0; i < lines.size(); i++) {
-            String line = lines.get(i).trim();
+            String line = removeUtf8Bom(lines.get(i)).trim();
             if (line.isEmpty()) {
                 continue;
             }
@@ -76,16 +83,19 @@ public class ImportCommand extends Command {
                 Person person = parsePersonFromCsvLine(line);
                 if (model.hasPerson(person)) {
                     duplicateCount++;
+                    addSkipDetail(skipDetails, i + 1, "duplicate person (same name)");
                     continue;
                 }
                 model.addPerson(person);
                 importedCount++;
             } catch (ParseException | IllegalArgumentException ex) {
                 invalidCount++;
+                addSkipDetail(skipDetails, i + 1, ex.getMessage());
             }
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, importedCount, duplicateCount, invalidCount));
+        String summary = String.format(MESSAGE_SUCCESS, importedCount, duplicateCount, invalidCount);
+        return new CommandResult(summary + formatSkipDetails(skipDetails));
     }
 
     private static boolean isHeaderRow(String line) {
@@ -156,6 +166,36 @@ public class ImportCommand extends Command {
 
         columns.add(current.toString().trim());
         return columns;
+    }
+
+    private static void addSkipDetail(List<String> skipDetails, int rowNumber, String reason) {
+        if (skipDetails.size() >= MAX_SKIP_DETAILS) {
+            return;
+        }
+        String cleanReason = (reason == null || reason.isBlank()) ? "invalid row format" : reason;
+        skipDetails.add(String.format("Row %d skipped: %s", rowNumber, cleanReason));
+    }
+
+    private static String formatSkipDetails(List<String> skipDetails) {
+        if (skipDetails.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder builder = new StringBuilder("\nDetails:");
+        for (String detail : skipDetails) {
+            builder.append("\n- ").append(detail);
+        }
+        return builder.toString();
+    }
+
+    /**
+     * Removes a UTF-8 BOM character if present at the start of a line.
+     */
+    private static String removeUtf8Bom(String line) {
+        if (line != null && !line.isEmpty() && line.charAt(0) == '\uFEFF') {
+            return line.substring(1);
+        }
+        return line;
     }
 }
 
