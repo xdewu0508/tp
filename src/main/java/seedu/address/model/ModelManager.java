@@ -24,7 +24,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private ReadOnlyAddressBook previousAddressBook = null;
-    private ReadOnlyAddressBook redoAddressBook = null; 
+    private ReadOnlyAddressBook redoAddressBook = null;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
