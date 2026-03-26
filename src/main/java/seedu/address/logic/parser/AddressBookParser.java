@@ -25,10 +25,9 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SortAddressCommand;
 import seedu.address.logic.commands.TagCommand;
-import seedu.address.logic.commands.UnflagCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UnflagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.RemarkCommandParser;
 
 /**
  * Parses user input.

@@ -42,16 +42,16 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("class") String studentClass, @JsonProperty("flag") String flag,
             @JsonProperty("class") String studentClass, @JsonProperty("remark") String remark,
+            @JsonProperty("flag") String flag,
             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.studentClass = studentClass;
-        this.flag = flag;
         this.remark = remark;
+        this.flag = flag;
         if (tags != null) {
             this.tags.addAll(tags);
         }

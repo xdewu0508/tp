@@ -65,6 +65,7 @@ public class UnflagCommand extends Command {
                 personToUnflag.getEmail(),
                 personToUnflag.getAddress(),
                 personToUnflag.getStudentClass(),
+                personToUnflag.getRemark(),
                 null,
                 personToUnflag.getTags());
     }

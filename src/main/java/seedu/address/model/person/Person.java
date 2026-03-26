@@ -78,8 +78,6 @@ public class Person {
         this(name, phone, email, address, null, Remark.EMPTY, null, tags);
     }
 
-    }
-
     public Name getName() {
         return name;
     }

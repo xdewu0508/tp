@@ -69,6 +69,7 @@ public class FlagCommand extends Command {
                 personToFlag.getEmail(),
                 personToFlag.getAddress(),
                 personToFlag.getStudentClass(),
+                personToFlag.getRemark(),
                 flag,
                 personToFlag.getTags());
     }
