@@ -106,4 +106,15 @@ public interface Model {
      */
     void undoAddressBook();
 
+    /**
+     * Returns true if there is a state to redo to.
+     */
+    boolean canRedoAddressBook();
+
+    /**
+     * Restores the address book to the state before the most recent undo.
+     */
+    void redoAddressBook();
+
+
 }

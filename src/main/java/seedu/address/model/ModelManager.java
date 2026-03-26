@@ -24,6 +24,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private ReadOnlyAddressBook previousAddressBook = null;
+    private ReadOnlyAddressBook redoAddressBook = null; 
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -139,6 +140,7 @@ public class ModelManager implements Model {
     @Override
     public void saveCurrentState() {
         previousAddressBook = new AddressBook(addressBook);
+        redoAddressBook = null;
     }
 
     @Override
@@ -148,8 +150,21 @@ public class ModelManager implements Model {
 
     @Override
     public void undoAddressBook() {
+        redoAddressBook = new AddressBook(addressBook);
         setAddressBook(previousAddressBook);
         previousAddressBook = null;
+    }
+
+    @Override
+    public boolean canRedoAddressBook() {
+        return redoAddressBook != null;
+    }
+
+    @Override
+    public void redoAddressBook() {
+        previousAddressBook = new AddressBook(addressBook);
+        setAddressBook(redoAddressBook);
+        redoAddressBook = null;
     }
 
 
