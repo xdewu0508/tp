@@ -101,6 +101,9 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_import() throws Exception {
         assertTrue(parser.parseCommand(ImportCommand.COMMAND_WORD + " contacts.csv") instanceof ImportCommand);
+    }
+
+    @Test
     public void parseCommand_export() throws Exception {
         assertTrue(parser.parseCommand(ExportCommand.COMMAND_WORD + " contacts.csv") instanceof ExportCommand);
     }
