@@ -77,6 +77,13 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_delete_caseInsensitive() throws Exception {
+        DeleteCommand command = (DeleteCommand) parser.parseCommand(
+                "DeLeTe " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeleteCommand(toList(INDEX_FIRST_PERSON)), command);
+    }
+
+    @Test
     public void parseCommand_deleteMultiple() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " 1 2 3");
