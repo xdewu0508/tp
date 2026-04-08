@@ -3,21 +3,28 @@
 skinparam ArrowFontStyle plain
 
 box Model MODEL_COLOR_T1
-participant ":Model" as Model MODEL_COLOR
-participant ":VersionedAddressBook" as VersionedAddressBook MODEL_COLOR
+participant ":ModelManager" as ModelManager MODEL_COLOR
+participant "currentAB\n:AddressBook" as CurrentAB MODEL_COLOR
+participant "snapshot\n:AddressBook" as Snapshot MODEL_COLOR
 end box
 
-[-> Model : undoAddressBook()
-activate Model
+[-> ModelManager : undoAddressBook()
+activate ModelManager
 
-Model -> VersionedAddressBook : undo()
-activate VersionedAddressBook
+ModelManager -> CurrentAB ** : new AddressBook(addressBook)
+note right: Save current state\ninto redoAddressBook
 
-VersionedAddressBook -> VersionedAddressBook :resetData(ReadOnlyAddressBook)
-VersionedAddressBook --> Model :
-deactivate VersionedAddressBook
+ModelManager -> ModelManager : setAddressBook(previousAddressBook)
+activate ModelManager
+ModelManager -> CurrentAB : resetData(previousAddressBook)
+activate CurrentAB
+CurrentAB --> ModelManager
+deactivate CurrentAB
+deactivate ModelManager
 
-[<-- Model
-deactivate Model
+ModelManager -> ModelManager : previousAddressBook = null
+
+[<-- ModelManager
+deactivate ModelManager
 
 @enduml

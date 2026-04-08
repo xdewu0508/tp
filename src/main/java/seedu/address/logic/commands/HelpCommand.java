@@ -39,9 +39,14 @@ public class HelpCommand extends Command {
             "find   " + FindCommand.MESSAGE_USAGE,
             "sort   " + SortAddressCommand.MESSAGE_USAGE,
             "export " + ExportCommand.MESSAGE_USAGE,
+<<<<<<< alphabugfixes
             "undo   " + UndoCommand.MESSAGE_USAGE,
             "redo   " + RedoCommand.MESSAGE_USAGE,
+=======
+            "import " + ImportCommand.MESSAGE_USAGE,
+>>>>>>> master
             "list   " + ListCommand.MESSAGE_USAGE,
+            "sort   " + SortCommand.MESSAGE_USAGE,
             "clear  " + ClearCommand.MESSAGE_USAGE,
             "exit   " + ExitCommand.MESSAGE_USAGE,
             "help   " + HelpCommand.MESSAGE_USAGE,
@@ -62,9 +67,14 @@ public class HelpCommand extends Command {
             Map.entry(FindCommand.COMMAND_WORD, FindCommand.MESSAGE_USAGE),
             Map.entry(SortAddressCommand.COMMAND_WORD, SortAddressCommand.MESSAGE_USAGE),
             Map.entry(ExportCommand.COMMAND_WORD, ExportCommand.MESSAGE_USAGE),
+<<<<<<< alphabugfixes
             Map.entry(UndoCommand.COMMAND_WORD, UndoCommand.MESSAGE_USAGE),
             Map.entry(RedoCommand.COMMAND_WORD, RedoCommand.MESSAGE_USAGE),
+=======
+            Map.entry(ImportCommand.COMMAND_WORD, ImportCommand.MESSAGE_USAGE),
+>>>>>>> master
             Map.entry(ListCommand.COMMAND_WORD, ListCommand.MESSAGE_USAGE),
+            Map.entry(SortCommand.COMMAND_WORD, SortCommand.MESSAGE_USAGE),
             Map.entry(ClearCommand.COMMAND_WORD, ClearCommand.MESSAGE_USAGE),
             Map.entry(ExitCommand.COMMAND_WORD, ExitCommand.MESSAGE_USAGE),
             Map.entry(HelpCommand.COMMAND_WORD, HelpCommand.MESSAGE_USAGE)
