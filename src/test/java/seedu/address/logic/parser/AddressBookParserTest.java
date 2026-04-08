@@ -143,6 +143,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_sort() throws Exception {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD) instanceof SortCommand);
+        assertTrue(parser.parseCommand("Sort") instanceof SortCommand);
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " name") instanceof SortCommand);
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " address") instanceof SortCommand);
         assertThrows(ParseException.class, () -> parser.parseCommand(SortCommand.COMMAND_WORD + " phone"));
