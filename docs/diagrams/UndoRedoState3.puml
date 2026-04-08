@@ -4,18 +4,17 @@ skinparam ClassFontColor #000000
 skinparam ClassBorderColor #000000
 skinparam ClassBackgroundColor #FFFFAA
 
-title After command "undo"
+title After command "redo"
 
-package States <<rectangle>> {
-    class State1 as "<u>ab0:AddressBook</u>"
-    class State2 as "<u>ab1:AddressBook</u>"
-    class State3 as "<u>ab2:AddressBook</u>"
+package ModelManager {
+    class AB as "<u>addressBook\n:AddressBook</u>" #FFFFAA
+    class Prev as "<u>previousAddressBook\n:AddressBook</u>" #AAFFAA
+    class Redo as "redoAddressBook\n= null" #DDDDDD
 }
 
-State1 -[hidden]right-> State2
-State2 -[hidden]right-> State3
+AB -[hidden]right-> Prev
+Prev -[hidden]right-> Redo
 
-class Pointer as "Current State" #FFFFFF
-
-Pointer -up-> State2
+note bottom of AB : Post-delete state restored\n(person 5 removed again)
+note bottom of Prev : Snapshot of pre-delete state\n(for undo)
 @end
