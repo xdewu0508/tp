@@ -4,19 +4,17 @@ skinparam ClassFontColor #000000
 skinparam ClassBorderColor #000000
 skinparam ClassBackgroundColor #FFFFAA
 
-title After command "clear"
+title After command "undo" (undoing the add)
 
-package States <<rectangle>> {
-    class State1 as "<u>ab0:AddressBook</u>"
-    class State2 as "<u>ab1:AddressBook</u>"
-    class State3 as "<u>ab3:AddressBook</u>"
+package ModelManager {
+    class AB as "<u>addressBook\n:AddressBook</u>" #FFFFAA
+    class Prev as "previousAddressBook\n= null" #DDDDDD
+    class Redo as "<u>redoAddressBook\n:AddressBook</u>" #FFAAAA
 }
 
-State1 -[hidden]right-> State2
-State2 -[hidden]right-> State3
+AB -[hidden]right-> Prev
+Prev -[hidden]right-> Redo
 
-class Pointer as "Current State" #FFFFFF
-
-Pointer -up-> State3
-note right on link: State ab2 deleted.
+note bottom of AB : Restored to pre-add state\n(David removed)
+note bottom of Redo : Snapshot of post-add state\n(for redo)
 @end
