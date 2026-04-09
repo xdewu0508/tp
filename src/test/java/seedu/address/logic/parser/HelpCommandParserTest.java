@@ -28,6 +28,9 @@ public class HelpCommandParserTest {
     public void parse_missingPreviouslyOmittedCommand_returnsTargetedHelp() throws Exception {
         HelpCommand command = parser.parse("filter");
         assertEquals(new HelpCommand("filter"), command);
+    public void parse_uppercaseCommandWord_returnsTargetedHelp() throws Exception {
+        HelpCommand command = parser.parse("LIST");
+        assertEquals(new HelpCommand("list"), command);
     }
 
     @Test
