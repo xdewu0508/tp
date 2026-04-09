@@ -209,19 +209,29 @@ Examples:
 * `tag 2 t/support` Adds the tag `support` to the 2nd person's existing tags.
 * `tag 5 t/exco t/hons` Adds the tags `exco` and `hons` to the 5th person's existing tags.
 
-### Deleting a person : `delete`
+### Deleting person(s) : `delete`
 
-Deletes the specified person from the address book.
+Deletes one or more specified persons from the address book.
 
-Format: `delete INDEX`
+Format: `delete INDEX [MORE_INDICES]`
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+Alternative formats:
+* `delete START_INDEX-END_INDEX`
+* `delete all`
+
+* Deletes the person(s) at the specified index or indices.
+* The indices refer to the index numbers shown in the displayed person list.
+* Each index **must be a positive integer** 1, 2, 3, …​
+* `delete 1 3 5` deletes multiple displayed persons in one command.
+* `delete 2-5` deletes a range of displayed persons.
+* `delete all` deletes all persons currently shown in the displayed list.
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
+* `list` followed by `delete 1 3 5` deletes the 1st, 3rd, and 5th persons in the address book.
+* `list` followed by `delete 2-4` deletes the 2nd to 4th persons in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `filter c/3A` followed by `delete all` deletes all currently displayed persons in class `3A`.
 
 ### Clearing all entries : `clear`
 
