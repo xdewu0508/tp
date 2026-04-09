@@ -80,6 +80,8 @@ Formats:
 - `help` — opens the help window with the full command summary.
 - `help COMMAND_WORD` — shows usage for that command (e.g., `help add`, `help list`).
 
+* Both the `help` keyword and the `COMMAND_WORD` argument are **case-insensitive**. e.g. `HELP add`, `help ADD`, and `Help Add` all show the usage for the `add` command.
+
 Tip: The help window includes a link to the full User Guide.
 
 
@@ -187,7 +189,8 @@ Finds persons whose names contain any of the given keywords.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
+* The `find` command word is **case-insensitive**. e.g. `FIND alex`, `Find alex`, and `find alex` all work.
+* The search keywords are also case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
