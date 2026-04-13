@@ -123,6 +123,9 @@ Tip: The help window includes a link to the full User Guide.
 * The **Copy URL** button copies the User Guide link shown in the help window to your clipboard.
 * You can then paste that link into a browser to open the guide (current URL: `https://ay2526s2-cs2103-f09-3.github.io/tp/UserGuide.html`).
 
+Example help window:
+![Help window with command summary](images/helpMessage.png)
+
 
 ### Adding a contact: `add` {#adding-a-contact}
 
@@ -395,9 +398,11 @@ If your changes to the data file makes its format invalid, TeacherBook will disc
 Furthermore, certain edits can cause the TeacherBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
-### Archiving data files `[coming in v2.0]`
+### Archiving data files
 
-_Details coming soon ..._
+TeacherBook CLI does not provide a built-in data-archiving feature in v1.6.
+
+If you want to keep historical snapshots, manually copy the `data/addressbook.json` file to another folder or filename as a backup before making major changes.
 
 --------------------------------------------------------------------------------------------------------------------
 
