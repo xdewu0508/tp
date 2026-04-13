@@ -538,6 +538,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Planned Enhancements**
+Team Size = 5
 
 This appendix tracks known feature flaws that are intentionally not fixed in v1.6, together with proposed near-term fixes.
 
@@ -556,6 +557,10 @@ This appendix tracks known feature flaws that are intentionally not fixed in v1.
 4. **Support exporting filtered subsets**
    * **Current flaw:** `export` always writes the full contact list, even when users need only a subset (e.g. current filtered view, class-specific contacts, or tagged contacts).
    * **Planned fix:** Add export modes/flags to export selected subsets, such as `export --filtered FILE_PATH` (current displayed list) and `export --class CLASS FILE_PATH`, while keeping full-list export as the default behavior.
+
+5. **Support deleting a specific tag**
+   * **Current flaw:** Tag editing is all-or-nothing. Using `edit 1 t/` clears all tags, and there is no way to remove just one specific tag while keeping the others.
+   * **Planned fix:** Implement targeted tag modification/deletion for specific tags (e.g. remove one tag while preserving the rest), instead of only supporting all-or-nothing tag clearing.
 
 --------------------------------------------------------------------------------------------------------------------
 
