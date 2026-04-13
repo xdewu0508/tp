@@ -1,6 +1,6 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 
 import java.util.ArrayList;
 
@@ -27,8 +27,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             ArrayList<Index> targets = ParserUtil.parseIndices(args);
             return new DeleteCommand(targets);
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, pe);
         }
     }
 
