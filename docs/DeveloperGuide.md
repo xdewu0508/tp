@@ -767,6 +767,10 @@ This appendix tracks known feature flaws that are intentionally not fixed in v1.
    * **Current flaw:** Tag editing is all-or-nothing. Using `edit 1 t/` clears all tags, and there is no way to remove just one specific tag while keeping the others.
    * **Planned fix:** Implement targeted tag modification/deletion for specific tags (e.g. remove one tag while preserving the rest), instead of only supporting all-or-nothing tag clearing.
 
+6. **Reject oversized delete ranges earlier**
+   * **Current flaw:** `delete` range inputs are expanded before they are validated against the displayed list, so extremely large ranges can hurt responsiveness before the command is rejected.
+   * **Planned fix:** Validate the range bounds before materializing all indices, so inputs such as `delete 1-10000000` fail immediately with a clear error message.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
