@@ -804,11 +804,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Glossary
 
 * **Contact**: A stored person entry representing a student or parent.
-* **Class**: The alphanumeric class label associated with a contact, such as `3A`.
-* **Tag**: A short user-defined label used to categorize a contact.
-* **Remark**: A free-form note attached to a contact.
-* **Flag**: A follow-up reason attached to a contact to indicate that further action is needed.
-* **Dashboard**: The summary view that shows all currently flagged contacts and their follow-up reasons.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 * **Class**: A student's school class or cohort (e.g. 3A, 4B). Used to group and filter contacts.
@@ -820,38 +815,42 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 --------------------------------------------------------------------------------------------------------------------
 
+## **Appendix: Effort**
+
+TeacherBook CLI extends AB3 into a teacher-focused contact manager. Compared with AB3's generic address book, this project had to support school-specific workflows such as class-based filtering, follow-up flagging, a flagged-contacts dashboard, CSV import/export, and richer contact metadata like class, remarks, and flags.
+
+The main implementation effort went into adapting AB3's command architecture and data model without losing consistency or usability. In particular, the team had to integrate teacher-specific workflows into the existing parser and command structure, keep undo/redo behavior coherent across the newer commands, and ensure the UG and DG continued to match the shipped product as the feature set grew.
+
+A significant amount of base infrastructure was reused from AB3, including the overall architecture, storage pipeline, UI shell, and testing scaffolding. That reuse reduced effort on application setup and allowed the team to focus most of its work on domain adaptation, command behavior, diagrams, and teacher-oriented documentation.
+
+The resulting product supports an end-to-end teacher workflow: importing contact lists, filtering by class, flagging students who need follow-up, reviewing those flagged contacts through the dashboard, and exporting the data back to CSV.
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## **Appendix: Planned Enhancements**
-Team Size = 5
+Team size: 5
 
 This appendix tracks known feature flaws that are intentionally not fixed in v1.6, together with proposed near-term fixes.
 
-1. **Improve import header detection**
-   * **Current flaw:** `import` treats a row as header when the first cell is `name`, which can wrongly skip a legitimate first contact named `name` and omit a row-level reason.
-   * **Planned fix:** Detect headers using full-column matching (e.g. `name,phone,email,address`) instead of first-cell matching, and when uncertain, process the row as data and report explicit validation errors.
+1. **Detect CSV headers using full-column matching**
+   * **Current flaw:** `import` treats the first row as a header whenever the first cell is `name`, so a legitimate data row such as `name,91234567,user@example.com,...` can be skipped wrongly.
+   * **Planned fix:** Treat the first row as a header only when the leading columns match the expected header pattern (e.g. `name,phone,email,address`) rather than matching just the first cell.
 
-2. **Support explicit header control for import**
-   * **Current flaw:** Users cannot override automatic header detection when importing CSV files with uncommon first rows.
-   * **Planned fix:** Add optional flags such as `import --has-header FILE_PATH` and `import --no-header FILE_PATH` to make behavior explicit and predictable.
+2. **Report mistaken CSV header skips explicitly**
+   * **Current flaw:** When the first row is skipped because it resembles a header, the user does not receive a row-specific skip reason in the import summary.
+   * **Planned fix:** Show an explicit row-level reason such as `Row 1 skipped: row detected as CSV header` so the skip is transparent to the user.
 
-3. **Make import skip reasons fully transparent**
-   * **Current flaw:** Some skipped-row scenarios (such as mistaken header detection) do not produce row-specific reasons in feedback.
-   * **Planned fix:** Route every skip path through a unified reason-reporting mechanism so each skipped row has a concrete, user-visible explanation.
-
-4. **Support exporting filtered subsets**
-   * **Current flaw:** `export` always writes the full contact list, even when users need only a subset (e.g. current filtered view, class-specific contacts, or tagged contacts).
-   * **Planned fix:** Add export modes/flags to export selected subsets, such as `export --filtered FILE_PATH` (current displayed list) and `export --class CLASS FILE_PATH`, while keeping full-list export as the default behavior.
-
-5. **Support deleting a specific tag**
+3. **Support deleting a specific tag**
    * **Current flaw:** Tag editing is all-or-nothing. Using `edit 1 t/` clears all tags, and there is no way to remove just one specific tag while keeping the others.
    * **Planned fix:** Implement targeted tag modification/deletion for specific tags (e.g. remove one tag while preserving the rest), instead of only supporting all-or-nothing tag clearing.
 
-6. **Reject oversized delete ranges earlier**
+4. **Reject oversized delete ranges earlier**
    * **Current flaw:** `delete` range inputs are expanded before they are validated against the displayed list, so extremely large ranges can hurt responsiveness before the command is rejected.
    * **Planned fix:** Validate the range bounds before materializing all indices, so inputs such as `delete 1-10000000` fail immediately with a clear error message.
 
-7. **Improve help window usability**
-   * **Current flaw:** The help popup design is basic, and users currently rely on manual window controls to close it.
-   * **Planned fix:** Improve the help popup layout/UX and add a CLI-based way to close it (e.g. `help close`) so users can dismiss the window without clicking the close button.
+5. **Restore the minimized help window when help is triggered again**
+   * **Current flaw:** If the help window is minimized and the user runs `help` again, the original help window stays minimized and no visible help window appears.
+   * **Planned fix:** Detect when the help window is minimized and restore it before focusing it, so repeated `help` actions always bring a visible help window to the foreground.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -969,6 +968,87 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `export` (no path)<br>
       Expected: No file is created. Error details shown in the status message.
+
+### Importing contacts from CSV
+
+1. Importing contacts from a CSV file
+
+   1. Prerequisites: Prepare a CSV file with a header row, at least one valid contact row, one duplicate-name row, and one invalid row.
+
+   1. Test case: `import sample.csv`<br>
+      Expected: Valid rows are imported. The result summary shows how many rows were imported, skipped as duplicates, and skipped as invalid.
+
+   1. Test case: Use a CSV row with a quoted address containing commas, then run `import sample.csv`<br>
+      Expected: The row is imported successfully, and the full address (including commas) is preserved.
+
+   1. Test case: `import missing-file.csv`<br>
+      Expected: No contacts are imported. Error message indicates the file could not be read.
+
+   1. Test case: `import` (no path)<br>
+      Expected: No import occurs. Error details shown in the status message.
+
+### Sorting contacts
+
+1. Sorting the full contact list
+
+   1. Prerequisites: At least three contacts exist with different names and addresses.
+
+   1. Test case: `sort`<br>
+      Expected: Contacts are sorted by address. Status message shows `Sorted all persons by address`.
+
+   1. Test case: `sort name`<br>
+      Expected: Contacts are sorted by name. Status message shows `Sorted all persons by name`.
+
+   1. Test case: `sort phone`<br>
+      Expected: No sorting is applied. Error details shown in the status message.
+
+### Help command
+
+1. Viewing general and command-specific help
+
+   1. Test case: `help`<br>
+      Expected: The help window opens and displays the full command summary.
+
+   1. Test case: `help add`<br>
+      Expected: The help window remains closed, and the result box shows the usage for `add`.
+
+   1. Test case: `help ADD`<br>
+      Expected: Same result as `help add` because help targets are case-insensitive.
+
+   1. Test case: `help unknowncommand`<br>
+      Expected: No help content is shown. Error details shown in the status message.
+
+### Flagging, unflagging, and dashboard
+
+1. Flagging a contact for follow-up
+
+   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+
+   1. Test case: `flag 1 r/Missing consent form`<br>
+      Expected: The 1st person becomes flagged. Status message shows the updated person.
+
+   1. Test case: `flag 0 r/Test` and `flag 1`<br>
+      Expected: No person is flagged. Error details shown in the status message.
+
+1. Removing a follow-up flag
+
+   1. Prerequisites: At least one contact is already flagged.
+
+   1. Test case: `unflag 1`<br>
+      Expected: The selected flagged contact is unflagged. Status message shows the updated person.
+
+   1. Test case: `unflag 1` on a contact that is not flagged<br>
+      Expected: No change is made. Error message shows `This contact is not flagged.`
+
+1. Viewing the flagged-contacts dashboard
+
+   1. Prerequisites: At least two contacts are flagged.
+
+   1. Test case: `dashboard`<br>
+      Expected: The displayed list is filtered to flagged contacts, and the result box shows the flagged-contact summary.
+
+   1. Test case: `dashboard` when no contacts are flagged<br>
+      Expected: An empty list is shown, and the result box reports zero flagged contacts.
 
 ### Undoing and redoing a command
 
