@@ -24,11 +24,6 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             if (ParserUtil.isAll(args)) {
                 return new DeleteCommand(true);
             }
-            String trimmedArgs = args.trim();
-            if (trimmedArgs.contains("-")) {
-                Index[] bounds = ParserUtil.parseRange(trimmedArgs);
-                return new DeleteCommand(bounds[0], bounds[1]);
-            }
             ArrayList<Index> targets = ParserUtil.parseIndices(args);
             return new DeleteCommand(targets);
         } catch (ParseException pe) {
