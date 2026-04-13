@@ -1,9 +1,14 @@
-#copyButton, #helpMessage {
+#copyButton {
     -fx-text-fill: white;
+    -fx-background-color: dimgray;
 }
 
-#copyButton {
-    -fx-background-color: dimgray;
+#helpMessage {
+    -fx-text-fill: black;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: white;
 }
 
 #copyButton:hover {

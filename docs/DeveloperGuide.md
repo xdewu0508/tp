@@ -849,6 +849,10 @@ This appendix tracks known feature flaws that are intentionally not fixed in v1.
    * **Current flaw:** `delete` range inputs are expanded before they are validated against the displayed list, so extremely large ranges can hurt responsiveness before the command is rejected.
    * **Planned fix:** Validate the range bounds before materializing all indices, so inputs such as `delete 1-10000000` fail immediately with a clear error message.
 
+7. **Improve help window usability**
+   * **Current flaw:** The help popup design is basic, and users currently rely on manual window controls to close it.
+   * **Planned fix:** Improve the help popup layout/UX and add a CLI-based way to close it (e.g. `help close`) so users can dismiss the window without clicking the close button.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
