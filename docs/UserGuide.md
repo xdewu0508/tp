@@ -5,6 +5,12 @@ title: TeacherBook CLI User Guide
 
 TeacherBook CLI is a **desktop app for managing student and parent contacts, optimized for use via a Command Line Interface** (CLI) while still providing the benefits of a Graphical User Interface (GUI). If you can type fast, TeacherBook CLI can help you manage classroom contact information more efficiently than traditional GUI apps.
 
+**Who is this for?** TeacherBook CLI is designed for teachers in primary and secondary schools who need to keep track of student and parent contact details across multiple classes. It is best suited for users who are comfortable typing commands and prefer keyboard-driven workflows over mouse-based navigation.
+
+**What problem does it solve?** Teachers often juggle contact information across spreadsheets, physical records, and school systems. TeacherBook CLI centralises this into a single searchable, filterable, and exportable contact book — with features like class-based filtering, student flagging for follow-ups, and CSV import/export to integrate with existing school workflows.
+
+* Table of Contents
+{:toc}
 ## Table of contents {#table-of-contents}
 
 * [Quick start](#quick-start)
@@ -44,9 +50,9 @@ TeacherBook CLI is a **desktop app for managing student and parent contacts, opt
 
 1. Download the latest `.jar` file from the [TeacherBook CLI releases page](https://github.com/AY2526S2-CS2103-F09-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your TeacherBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+1. Open a command terminal, `cd` (change directory) into the folder you put the jar file in, and use the `java -jar TeacherBookCLI.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -55,7 +61,7 @@ TeacherBook CLI is a **desktop app for managing student and parent contacts, opt
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the TeacherBook.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -89,10 +95,10 @@ TeacherBook CLI is a **desktop app for managing student and parent contacts, opt
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/student` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/student`, `t/student t/parent` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -154,6 +160,8 @@ Imports contacts from a CSV file.
 
 Format: `import FILE_PATH` (absolute path)
 
+* `FILE_PATH` is the location and name of the CSV file to import from (e.g. `data\contacts.csv`).
+
 CSV row format:
 `name,phone,email,address[,class][,tag1;tag2;...]`
 
@@ -184,11 +192,13 @@ Exports all contacts from the address book to a CSV file.
 
 Format: `export FILE_PATH` (absolute path)
 
+* `FILE_PATH` is the location and name of the file to save to (e.g. `data\contacts.csv`).
+
 Notes:
 * `FILE_PATH` must be an absolute file path (e.g. `C:\data\contacts.csv`).
 * The command writes a CSV header: `name,phone,email,address,class,tags`.
-* If needed, parent folders in the given path are created automatically.
-* Existing files at the same path will be overwritten.
+* If needed, parent folders in the given file path are created automatically.
+* Existing files at the same file path will be overwritten.
 * Tags are exported as a semicolon-separated list.
 
 Examples:
@@ -307,21 +317,30 @@ Examples:
 
 ### Undoing the previous change: `undo`
 
-Reverts the most recent command that modified the address book.
+Reverts the most recent command that modified the TeacherBook.
 
 Format: `undo`
 
+* Only commands that change contact data can be undone. These are: `add`, `edit`, `delete`, `clear`, `tag`, `remark`, `flag`, `unflag`, `import`, and `sort`.
+* Commands that do not modify data (`list`, `find`, `filter`, `help`, `export`, `dashboard`, `exit`) are **not** undoable.
+* Only one level of undo is supported (i.e. you can only undo the single most recent change).
+* If there is nothing to undo (e.g. no modifying command has been run yet), `undo` will display the error message `Nothing to undo!`.
+
 Examples:
-* `undo`
+* `delete 1` followed by `undo` restores the deleted person.
+* `clear` followed by `undo` restores all contacts.
 
 ### Redoing the previous undo: `redo` {#redoing-the-previous-undo}
 
-Restores the most recently undone command.
+Re-applies the most recently undone command.
 
 Format: `redo`
 
+* `redo` is only available immediately after an `undo`. If you execute another modifying command after undoing, `redo` is no longer available.
+* If there is nothing to redo, `redo` will display the error message `Nothing to redo!`.
+
 Examples:
-* `redo`
+* `delete 1`, then `undo`, then `redo` deletes the person again.
 
 ### Deleting contact(s) : `delete`
 
@@ -349,7 +368,7 @@ Examples:
 
 ### Clearing all entries : `clear` {#clearing-all-entries}
 
-Clears all entries from the address book.
+Clears all entries from the TeacherBook.
 
 Format: `clear`
 
@@ -361,15 +380,15 @@ Format: `exit`
 
 ### Saving the data {#saving-the-data}
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+TeacherBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file {#editing-the-data-file}
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+TeacherBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
-<div markdown="span" class="alert alert-warning">⚠️ **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+If your changes to the data file makes its format invalid, TeacherBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the TeacherBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 ### Archiving data files `[coming in v2.0]`
@@ -381,7 +400,7 @@ _Details coming soon ..._
 ## FAQ {#faq}
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous TeacherBook home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
