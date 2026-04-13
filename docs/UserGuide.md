@@ -120,6 +120,8 @@ Formats:
 * Both the `help` keyword and the `COMMAND_WORD` argument are **case-insensitive**. e.g. `HELP add`, `help ADD`, and `Help Add` all show the usage for the `add` command.
 
 Tip: The help window includes a link to the full User Guide.
+* The **Copy URL** button copies the User Guide link shown in the help window to your clipboard.
+* You can then paste that link into a browser to open the guide (current URL: `https://ay2526s2-cs2103-f09-3.github.io/tp/UserGuide.html`).
 
 
 ### Adding a contact: `add` {#adding-a-contact}
@@ -329,6 +331,7 @@ Format: `undo`
 Examples:
 * `delete 1` followed by `undo` restores the deleted person.
 * `clear` followed by `undo` restores all contacts.
+* `clear`, then `help`, then `undo` restores all contacts because `help` is read-only and does not consume undo history.
 
 ### Redoing the previous undo: `redo` {#redoing-the-previous-undo}
 
