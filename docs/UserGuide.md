@@ -232,6 +232,7 @@ Filters and displays contacts who belong to the specified class.
 
 Format: `filter c/CLASS`
 
+* Do not add any text before `c/` other than optional spaces at the start (e.g. `filter hello c/3A` is invalid).
 * The filter is case-insensitive. e.g. `c/3a` will match contacts in class `3A`.
 * Only contacts with a matching class are shown. Use `list` to show all contacts again.
 

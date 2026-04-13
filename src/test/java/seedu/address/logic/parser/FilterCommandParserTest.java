@@ -22,6 +22,14 @@ public class FilterCommandParserTest {
     }
 
     @Test
+    public void parse_unexpectedPreamble_throwsParseException() {
+        assertParseFailure(parser, "hello c/3A",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " extra c/3A",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+    }
+
+    @Test
     public void parse_emptyClass_throwsParseException() {
         assertParseFailure(parser, " c/",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
